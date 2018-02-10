@@ -7,13 +7,13 @@ concurrent, functional, closure centric language
 - every function is a closure
   - you can explicitly close over any variables
   - you can access / mutate a closure's context outside of a closure
+  - functions with no return value return themselves + their context after running
   - objects are just a closure with the identify function
 
 Due to the unique "closures first" concept, we get some really interesting things almost for free, like:
   - a class system - just include functions within a closure's context, these are now methods
   - objects - just closures where the closed function is returns the closure (identity)
-  - continuations
-    - because everything is inherently a closure, we get co-routines, green threads, etc
+  - because everything is inherently a closure, we get continuations, co-routines, green threads, etc
 
 ## examples
 Functions:
