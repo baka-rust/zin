@@ -23,45 +23,61 @@ expression        : definition
                   | return_statement
                   | expression infix_operand expression
                   | prefix_operand expression
-                  | atom
-                  | name
+                  | qualified_id
+                  | literal
                   ;
 
-definition        : 'let' (ID | persisted_name) '=' expression ;
+definition        : 'let' persistable_id '=' expression ;
 
-assignment        : name ('=' |'+=' | '-=' | '*=' | '/=') expression ;
+assignment        : qualified_id ('=' |'+=' | '-=' | '*=' | '/=') expression ;
 
-
-invocation        : name '(' expression_list? ')' ;
-
-lambda            : '(' argument_list? ')' '=>' (expression | block) ;
-
-function          : 'let' (ID | persisted_name) ('(' argument_list? ')')? '=>' (expression | block);
-
-block             : '(' expression* ')' ;
-
-spread            : '**' expression ;
-
-infix_operand     : '*' | '/' | '%' | '+' | '-'
-                  | '>' | '<' | '>=' | '<=' | '!=' | '=='
-                  | '&&' | '||'
-                  ;
-
-prefix_operand    : '-' | '!' ;
-
-argument_list     : (ID | persisted_name) (',' (ID | persisted_name))* ;
+invocation        : qualified_id '(' expression_list? ')' ;
 
 expression_list   : expression (',' expression)* ;
 
+lambda            : '(' argument_list? ')' '=>' (expression | block) ;
+
+function          : 'let' persistable_id ('(' argument_list? ')')? '=>' (expression | block);
+
+block             : '(' expression* ')' ;
+
+argument_list     : persistable_id (',' persistable_id)* ;
+
+spread            : '**' expression ;
+
 return_statement  : 'return' expression ;
 
-name              : ID
-                  | name '.' name
+infix_operand     : op_mul_div_mod
+                  | op_add_sub
+                  | op_compare
+                  | op_and
+                  | op_or
                   ;
 
-persisted_name    : ':' ID ;
+op_mul_div_mod    : '*' | '/' | '%' ;
 
-atom              : INT
+op_add_sub        : '+' | '-' ;
+
+op_compare        : '>' | '<' | '>=' | '<=' | '!=' | '==' ;
+
+op_and            : '&&' ;
+
+op_or             : '||' ;
+
+
+prefix_operand    : '-' | '!' ;
+
+qualified_id      : ID
+                  | qualified_id '.' qualified_id
+                  ;
+
+persistable_id    : ID
+                  | ':' ID ;
+
+literal           : INT
                   | STRING
                   | BOOL
+                  | list
                   ;
+
+list              : '[' expression_list? ']' ;
