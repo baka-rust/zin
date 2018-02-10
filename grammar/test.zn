@@ -1,0 +1,11 @@
+let Vehicle => (
+  let :odometer = 0
+)
+
+let Car(:make, :model) => (
+  **Vehicle
+  let :drive => (
+    odometer += 1
+    return odometer
+  )
+)
