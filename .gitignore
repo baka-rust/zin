@@ -94,5 +94,7 @@ log/
 
 # Code Recommenders
 .recommenders/
-grammar/build/
 grammar/build-test/
+
+zvm/zvm
+zvm_cpp

@@ -20,6 +20,7 @@ expression        : definition
                   | function
                   | spread
                   | '(' expression ')'
+                  | if_statement
                   | return_statement
                   | expression infix_operand expression
                   | prefix_operand expression
