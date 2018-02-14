@@ -27,6 +27,11 @@ enum z_op {
 
 void z_run(const char *bytecode, size_t length);
 
-size_t decode_op(const char *bc, size_t pc);
+void decode_op(const char *bc, size_t *pc);
+
+const char *get_id(const char *bc, size_t *pc);
+int get_int(const char *bc, size_t *pc);
+float get_float(const char *bc, size_t *pc);
+
 
 #endif /* Z_OP_H */

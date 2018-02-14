@@ -10,7 +10,6 @@
 
 
 int main(int argc, char *argv[]) {
-
   int fd;
   struct stat fs;
   size_t size;
