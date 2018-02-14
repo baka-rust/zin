@@ -1,23 +1,27 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
 
 #include "zlist.h"
 #include "zobject.h"
+#include "zop.h"
+
 
 int main(int argc, char *argv[]) {
-  z_object obj_a;
-  obj_a.type = Z_BOOL;
-  obj_a.data.b = true;
 
-  z_list l = z_list_init();
-  for (int j = 0; j < 128; j++) {
-    z_list_push(&l, obj_a);
-  }
+  int fd;
+  struct stat fs;
+  size_t size;
+  const char *mapped;
 
-  printf("\n");
-  for (int j = 0; j < 128; j++) {
-    z_object o = z_list_pop(&l);
-  }
+  fd = open("test.znc", O_RDONLY);
+  fstat(fd, &fs);
+  size = fs.st_size;
+  mapped = mmap(0, size, PROT_READ, MAP_SHARED, fd, 0);
+
+  z_run(mapped, size);
 
   return 0;
 }

@@ -14,7 +14,6 @@ void z_list_free(z_list *l) {
 
 void z_list_push(z_list *l, z_object o) {
   if (l->length == l->capacity) {
-    printf("up-sizing\n");
     l->capacity = l->capacity * Z_LIST_GROWTH_FACTOR;
     l->data = realloc(l->data, sizeof(z_object) * (size_t)l->capacity);
 
@@ -33,7 +32,6 @@ z_object z_list_pop(z_list *l) {
   l->length--;
 
   if (l->capacity > Z_LIST_BASE_CAPACITY && l->length == l->capacity / Z_LIST_SHRINK_POINT) {
-    printf("down-sizing\n");
     l->capacity = l->capacity / Z_LIST_SHRINK_FACTOR;
     l->data = realloc(l->data, sizeof(z_object) * (size_t)l->capacity);
 
